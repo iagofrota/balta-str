@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/server.js"
+    "start": "node ./bin/server.js",
+    "mododev": "nodemon ./bin/server.js"
   },
   "author": "Iago Frota",
   "license": "ISC",
