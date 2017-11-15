@@ -12,5 +12,8 @@
     "debug": "^3.1.0",
     "express": "^4.16.2",
     "http": "0.0.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.4.0"
   }
 }
