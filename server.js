@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
 const http = require('http');
 const debug = require('debug')('baltastr:server');
 const express = require('express');
 
 const app = express();
-const port = 3001;
+const port = 3000;
 app.set('port', port);
 
 const server = http.createServer(app);
@@ -19,3 +19,6 @@ const route = router.get('/', (req, res, next) => {
 });
 
 app.use('/', route);
+
+server.listen(port);
+console.log('API rodando da porta ' + port);
