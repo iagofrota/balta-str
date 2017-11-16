@@ -10,6 +10,9 @@ const router = express.Router();
 // Conecta ao banco
 mongoose.connect('mongodb://iagofrota:iagofrota@ds163705.mlab.com:63705/balta-store')
 
+// Carrega os models
+const Product = require('./models/product-model');
+
 // Carrega as rotas
 const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
