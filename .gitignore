@@ -7,4 +7,4 @@
 .history
 
 node_modules/*
-balta-str.code-workspace
+./balta-str.code-workspace
