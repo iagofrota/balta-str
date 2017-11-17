@@ -8,3 +8,5 @@
 
 node_modules/*
 balta-str.code-workspace
+
+.idea/**/*
