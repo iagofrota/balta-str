@@ -3,12 +3,11 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 const ValidationConstracts = require('../validators/fluent-validator');
+const respository = require('../repositories/product-repository');
 
 exports.get = (req, res, next) => {
-    Product
-        .find({
-            active: true
-        }, 'title slug price')
+    respository
+        .get()
         .then(data => {
             res.status(200).send(data);
         }).catch(e => {
@@ -17,11 +16,8 @@ exports.get = (req, res, next) => {
 }
 
 exports.getBySlug = (req, res, next) => {
-    Product
-        .findOne({
-            slug: req.params.slug,
-            active: true
-        }, 'title description slug price tags')
+    respository
+        .getBySlug(req.params.slug)
         .then(data => {
             res.status(200).send(data);
         }).catch(e => {
@@ -30,8 +26,8 @@ exports.getBySlug = (req, res, next) => {
 }
 
 exports.getById = (req, res, next) => {
-    Product
-        .findById(req.params.id)
+    respository
+        .getById(req.params.id)
         .then(data => {
             res.status(200).send(data);
         }).catch(e => {
@@ -40,11 +36,8 @@ exports.getById = (req, res, next) => {
 }
 
 exports.getByTag = (req, res, next) => {
-    Product
-        .find({
-            tags: req.params.tag,
-            active: true
-        }, 'title description slug price tags')
+    respository
+        .getByTag(req.params.tag)
         .then(data => {
             res.status(200).send(data);
         }).catch(e => {
@@ -58,14 +51,13 @@ exports.post = (req, res, next) => {
     contract.hasMinLen(req.body.slug, 3, 'O slug deverá ter no mínimo 3 caracteres');
     contract.hasMinLen(req.body.description, 3, 'A descrição deverá ter no mínimo 3 caracteres');
 
-    if(!contract.isValid()) {
+    if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
         return;
     }
-    
-    var product = new Product(req.body);
-    product
-        .save()
+
+    respository
+        .create(req.body)
         .then(x => {
             res.status(200).send({
                 message: 'Produto cadastrado com sucesso'
@@ -79,14 +71,8 @@ exports.post = (req, res, next) => {
 };
 
 exports.put = (req, res, next) => {
-    Product
-        .findByIdAndUpdate(req.params.id, {
-            $set: {
-                title: req.body.title,
-                description: req.body.description,
-                price: req.body.price
-            }
-        })
+    respository
+        .update(req.params.id, req.body)
         .then(x => {
             res.status(200).send({
                 message: 'Produto atualizado com sucesso'
@@ -100,8 +86,8 @@ exports.put = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    Product
-        .findOneAndRemove(req.body.id)
+    respository
+        .delete(req.body.id)
         .then(x => {
             res.status(200).send({
                 message: 'Produto removido com sucesso'
